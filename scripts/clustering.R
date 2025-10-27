@@ -250,7 +250,7 @@ for (R in max_radii) {
 
 # visualization
 results$max_radius <- as.numeric(results$max_radius)
-p <- ggplot(results, aes(x = max_radius, y = estimated_k)) +
+p2 <- ggplot(results, aes(x = max_radius, y = estimated_k)) +
   geom_line(color = "steelblue", size = 1) +
   geom_point(size = 2) +
   geom_hline(yintercept = n_shells, linetype = "dashed", color = "red") +
@@ -262,7 +262,7 @@ p <- ggplot(results, aes(x = max_radius, y = estimated_k)) +
        x = "max_radius (outermost shell radius)",
        y = "Estimated number of clusters (Gap Statistic)") +
   theme_minimal(base_size = 13)
-print(p)
+print(p2)
 print(results)
 ggsave("output/task2_spectral_gap_plot.png", p, width = 8, height = 5, dpi = 150)
 
