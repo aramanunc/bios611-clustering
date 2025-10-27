@@ -1,0 +1,25 @@
+DOCKER_IMAGE = bios611-clustering
+
+all: build clustering
+
+build:
+	docker build -t $(DOCKER_IMAGE) .
+
+clustering: output/task1_gap_plot.png output/task2_spectral_gap_plot.png output/shells_wide_maxradius8.html output/shells_close_maxradius2.html
+
+output/task1_gap_plot.png: scripts/clustering.R
+	docker run --rm -v $(PWD):/home/rstudio/project -w /home/rstudio/project $(DOCKER_IMAGE) Rscript scripts/clustering.R
+
+output/task2_spectral_gap_plot.png: output/task1_gap_plot.png
+	touch output/task2_spectral_gap_plot.png
+
+output/shells_wide_maxradius8.html: output/task2_spectral_gap_plot.png
+	touch output/shells_wide_maxradius8.html
+
+output/shells_close_maxradius2.html: output/shells_wide_maxradius8.html
+	touch output/shells_close_maxradius2.html
+
+clean:
+	rm -f output/*
+
+.PHONY: all build clustering clean
